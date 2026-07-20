@@ -14,8 +14,8 @@ export const SITE = {
 
 export const CONTACT = {
   email: 'malinda_ellis@outlook.com',
-  phone: '(803) 716-8396',
-  phoneHref: 'tel:+18037168396',
+  phone: '(813) 495-7879',
+  phoneHref: 'tel:+18134957879',
   address: '4464 Devine Street, Columbia, SC 29205',
   instagram: 'malindashaktiinnergy',
   instagramUrl: 'https://instagram.com/malindashaktiinnergy',
