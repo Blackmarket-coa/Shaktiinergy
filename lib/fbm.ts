@@ -1,61 +1,98 @@
 /**
  * FreeBlackMarket public store API client (server-side).
  *
- * GET https://api.freeblackmarket.com/store/vendors/{handle}
- * No auth required — /store/ routes are public with open CORS.
+ * Contract: FBM Connect / Store API v2 (docs/integrations/fbm-connect.md
+ * in blackmarket-coa/free-black-market).
  *
- * Fetches run in server components with ISR (revalidate) so the
- * catalog stays fresh without a rebuild, and every call fails soft:
- * a network error or 404 renders the site without the storefront
- * instead of breaking the page or the build.
+ * GET https://api.freeblackmarket.com/store/vendors/{handle}
+ * Public, unauthenticated, open CORS. Money amounts are MAJOR units
+ * (Medusa v2 convention): amount 24 = $24.00.
+ *
+ * Fetches run in server components with ISR (revalidate) so the catalog
+ * stays fresh without a rebuild, and every call fails soft: a network
+ * error or 404 renders the site without the storefront instead of
+ * breaking the page or the build.
  */
 
-import { FBM_API, FBM_STORE } from './config'
+import { FBM_API } from './config'
 
 export interface FBMPrice {
-  amount: number // cents
+  amount: number // major units: 24 = $24.00
+  currency_code: string
 }
 
 export interface FBMVariant {
   id: string
-  prices?: FBMPrice[]
+  title?: string
+  price?: FBMPrice
 }
 
 export interface FBMProduct {
   id: string
   title: string
-  description?: string
   handle: string
-  thumbnail?: string
-  status?: string
-  type?: { value?: string }
-  metadata?: {
-    event_date?: string
-    event_time?: string
-    venue_name?: string
-    venue_location?: string
-    recurring?: boolean
-    [key: string]: unknown
-  }
+  subtitle?: string | null
+  description?: string
+  thumbnail?: string | null
+  price?: FBMPrice | null
   variants?: FBMVariant[]
+  url?: string | null
+  type?: 'physical' | 'digital' | 'service' | 'event' | string
+}
+
+export interface FBMEvent {
+  id: string
+  title: string
+  handle: string | null
+  thumbnail?: string | null
+  dates: string[] // ISO UTC instants; may hold several dates for recurring events
+  venue?: { name: string; address?: string | null } | null
+  price?: FBMPrice | null
+  url?: string | null
 }
 
 export interface FBMVendor {
   id: string
-  name: string
   handle: string
+  name: string
   description?: string
   photo?: string
+  vendor_type?: string
+  verified?: boolean
+  rating?: number | null
+  review_count?: number
+  website_url?: string | null
+  url?: string
+}
+
+export interface FBMCapabilities {
+  vendor_enabled?: boolean
+  products_enabled?: boolean
+  digital_enabled?: boolean
+  services_enabled?: boolean
+  events_enabled?: boolean
+  reviews_enabled?: boolean
+  chat_enabled?: boolean
+  booking_enabled?: boolean
 }
 
 export interface FBMCatalogResponse {
   vendor: FBMVendor
-  catalog: {
-    events: FBMProduct[]
+  products?: FBMProduct[]
+  product_groups?: {
+    physical: FBMProduct[]
     digital: FBMProduct[]
     services: FBMProduct[]
-    physical: FBMProduct[]
-    all: FBMProduct[]
+    events: FBMProduct[]
+  }
+  events?: FBMEvent[]
+  capabilities?: FBMCapabilities
+  reviews_summary?: { average: number | null; count: number }
+  _meta?: {
+    handle: string
+    currency_code: string
+    storefront_url: string
+    checkout_url: string
   }
 }
 
@@ -63,7 +100,8 @@ export interface FBMCatalogResponse {
 export async function getVendorCatalog(handle: string): Promise<FBMCatalogResponse | null> {
   try {
     const res = await fetch(`${FBM_API}/store/vendors/${encodeURIComponent(handle)}`, {
-      // ISR: re-fetch at most every 5 minutes; serves stale while revalidating.
+      // ISR: re-fetch at most every 5 minutes; the API itself sends
+      // Cache-Control public,max-age=60,s-maxage=300.
       next: { revalidate: 300 },
     })
     if (!res.ok) return null
@@ -73,31 +111,20 @@ export async function getVendorCatalog(handle: string): Promise<FBMCatalogRespon
   }
 }
 
-/** First variant's first price, formatted as USD. Amounts are in cents. */
-export function formatPrice(product: FBMProduct): string | null {
-  const amt = product.variants?.[0]?.prices?.[0]?.amount
-  if (amt == null) return null
+/** Format an FBM price (major units) as currency, e.g. "$24". */
+export function formatPrice(price: FBMPrice | null | undefined): string | null {
+  if (price?.amount == null) return null
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-  }).format(amt / 100)
+    currency: (price.currency_code || 'usd').toUpperCase(),
+    minimumFractionDigits: price.amount % 1 === 0 ? 0 : 2,
+  }).format(price.amount)
 }
 
-/** Deep-link that adds the product's first variant to an FBM cart. */
-export function cartLink(product: FBMProduct, vendorHandle: string): string {
-  const variantId = product.variants?.[0]?.id
-  return variantId
-    ? `${FBM_STORE}/cart?add=${variantId}&vendor=${vendorHandle}`
-    : `${FBM_STORE}/products/${product.handle}`
-}
-
-/** Product page link on the FBM storefront. */
-export function productLink(product: FBMProduct): string {
-  return `${FBM_STORE}/products/${product.handle}`
-}
-
-/** Vendor storefront link. */
-export function vendorLink(vendorHandle: string): string {
-  return `${FBM_STORE}/vendors/${vendorHandle}`
+/** Upcoming occurrences of an event, soonest first (past dates dropped). */
+export function upcomingDates(ev: FBMEvent, now: Date): Date[] {
+  return (ev.dates ?? [])
+    .map((d) => new Date(d))
+    .filter((d) => !Number.isNaN(d.getTime()) && d.getTime() >= now.getTime())
+    .sort((a, b) => a.getTime() - b.getTime())
 }
