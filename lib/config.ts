@@ -8,7 +8,7 @@ export const SITE = {
   name: 'Shakti Innergy',
   tagline: 'The Ultimate Feminine Power Lies Within You Too',
   description:
-    'Holistic life & wellness coaching, sound healing, and motivational speaking by Malinda D. Ellis — Columbia, South Carolina.',
+    "I'm Malinda D. Ellis — holistic life & wellness coach, sound healer, and motivational speaker in Columbia, South Carolina.",
   url: 'https://shaktiinnergy.com',
 } as const
 
