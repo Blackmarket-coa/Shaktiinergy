@@ -12,18 +12,18 @@ import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { Story } from '@/components/Story'
 import { Services } from '@/components/Services'
+import { Quote } from '@/components/Quote'
 import { Storefront } from '@/components/Storefront'
 import { BlackoutConnect } from '@/components/BlackoutConnect'
 import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
 import { getVendorCatalog } from '@/lib/fbm'
-import { getMatrixProfile, getBlackoutProfile } from '@/lib/blackout'
+import { getBlackoutProfile } from '@/lib/blackout'
 import { FBM_HANDLE, BLACKOUT_USER_ID } from '@/lib/config'
 
 export default async function HomePage() {
-  const [fbm, matrixProfile, blackoutProfile] = await Promise.all([
+  const [fbm, blackoutProfile] = await Promise.all([
     getVendorCatalog(FBM_HANDLE),
-    getMatrixProfile(BLACKOUT_USER_ID),
     getBlackoutProfile(BLACKOUT_USER_ID),
   ])
 
@@ -34,8 +34,9 @@ export default async function HomePage() {
         <Hero />
         <Story />
         <Services />
+        <Quote />
         <Storefront data={fbm} />
-        <BlackoutConnect matrixProfile={matrixProfile} blackoutProfile={blackoutProfile} />
+        <BlackoutConnect blackoutProfile={blackoutProfile} />
         <Contact />
       </main>
       <Footer />

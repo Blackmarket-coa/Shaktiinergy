@@ -7,9 +7,21 @@ export function Hero() {
           The Ultimate <em>Feminine Power</em> Lies Within You Too
         </h1>
         <p>
-          Shakti — the Sanskrit embodiment of ultimate feminine power and energy. Malinda D. Ellis
-          guides women, especially Black and brown women, to reclaim their strength, dismantle the
-          invisible barriers of the past, and step fully into their purpose.
+          Life is often hailed as a journey, a path filled with twists and turns, peaks and
+          valleys. Yet, what do we do when we encounter moments of despair, disconnection, or
+          trauma? <strong className="dont-quit">Don&apos;t Quit.</strong>
+        </p>
+        <p>
+          Shakti Innergy embodies the essence of the ultimate feminine power and energy. Our
+          holistic approach to wellness is deeply rooted in the profound truth that mind, body, and
+          spirit intertwine harmoniously as one sacred entity.
+        </p>
+        <p>
+          Our coaching design is meticulously crafted to honor this interconnectedness. Through a
+          holistic lens, we passionately engage with women&apos;s empowerment groups and collaborate
+          with domestic violence advocacy organizations, exploring the necessity and inherent
+          ability for women to unveil their divine power and share their unique gifts with the
+          world around them.
         </p>
         <div className="actions">
           <a className="btn btn-gold" href="#contact">
