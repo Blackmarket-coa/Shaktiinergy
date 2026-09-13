@@ -50,4 +50,23 @@ events or products change on FreeBlackMarket.
 app/            layout, globals.css, page (server component)
 components/     Header, Hero, Story, Services, Storefront, BlackoutConnect, Contact, Footer
 lib/            config, fbm (store API), blackout (profile API), supabase (scaffold)
+public/         static assets served from the site root — see public/README.md
 ```
+
+## Photos
+
+Site imagery lives in `public/`, served from the root (`public/images/hero/hero.jpg`
+→ `/images/hero/hero.jpg`):
+
+```
+public/brand/             logo, favicon, social share card
+public/images/hero/       top-of-page hero photo
+public/images/about/      portraits for the Story section
+public/images/services/   one photo per service block
+public/images/events/     sound baths, workshops, retreats
+public/images/gallery/    general photo pool
+```
+
+Each folder's README lists the suggested filenames and sizes. Photos can be
+dropped in through the GitHub UI (**Add file → Upload files**); nothing is wired
+into the components until the files are there.
