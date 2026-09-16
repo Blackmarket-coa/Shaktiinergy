@@ -1,3 +1,6 @@
+import Image from 'next/image'
+import portrait from '@/public/images/about/malinda-chakra-chart.jpg'
+
 export function Story() {
   return (
     <section className="section" id="story">
@@ -5,6 +8,13 @@ export function Story() {
         <div>
           <div className="eyebrow">About</div>
           <h2 className="display">Hello, I&apos;m Malinda D. Ellis.</h2>
+          <Image
+            className="story-photo"
+            src={portrait}
+            alt="Malinda D. Ellis reading a chakra chart in a sunlit garden"
+            sizes="(max-width: 820px) 92vw, 34vw"
+            placeholder="blur"
+          />
         </div>
         <div className="story-copy">
           <p>

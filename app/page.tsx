@@ -12,6 +12,7 @@ import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { Story } from '@/components/Story'
 import { Services } from '@/components/Services'
+import { Gallery } from '@/components/Gallery'
 import { Quote } from '@/components/Quote'
 import { Storefront } from '@/components/Storefront'
 import { BlackoutConnect } from '@/components/BlackoutConnect'
@@ -34,6 +35,7 @@ export default async function HomePage() {
         <Hero />
         <Story />
         <Services />
+        <Gallery />
         <Quote />
         <Storefront data={fbm} />
         <BlackoutConnect blackoutProfile={blackoutProfile} />

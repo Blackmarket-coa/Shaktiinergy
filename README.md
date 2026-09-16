@@ -67,6 +67,23 @@ public/images/events/     sound baths, workshops, retreats
 public/images/gallery/    general photo pool
 ```
 
-Each folder's README lists the suggested filenames and sizes. Photos can be
-dropped in through the GitHub UI (**Add file → Upload files**); nothing is wired
-into the components until the files are there.
+Each folder's README lists the filenames and sizes, and flags which files are
+already referenced by a component. Photos are imported statically, so
+`next/image` sizes them per breakpoint and generates blur placeholders at build
+time — dropping a file into a folder does **not** put it on the page unless a
+component imports it.
+
+Currently on the page:
+
+| Path | Where it renders |
+| --- | --- |
+| `images/hero/malinda-sound-bath.jpg` | Hero, beside the headline |
+| `images/about/malinda-chakra-chart.jpg` | Story section |
+| `images/services/wellness-coaching.jpg` | Wellness Coaching block |
+| `images/services/public-speaking.jpg` | Public Speaking block |
+| `images/gallery/sound-bowl-setup.jpg` | "From the Practice" band |
+| `images/events/pinellas-diaspora-arts-project.jpg` | "From the Practice" band |
+| `brand/og-card.jpg` | Open Graph / Twitter link preview |
+
+Still missing: a Life Coaching photo (that block renders text-only until one
+exists) and the logo/favicon.
