@@ -13,5 +13,9 @@ dv-advocacy-workshop-2024.jpg
 Landscape, around 1600 × 1200. Several photos per event is fine — add `-01`,
 `-02` to the end (`sound-bath-2025-01.jpg`).
 
+**Wired:** `pinellas-diaspora-arts-project.jpg` — the second half of the
+"From the Practice" band in `components/Gallery.tsx`. Other photos here are
+stored but unused until imported somewhere.
+
 Event listings themselves come from FreeBlackMarket automatically; these are
 supporting photos for the site.

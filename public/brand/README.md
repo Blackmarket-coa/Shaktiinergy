@@ -10,5 +10,11 @@ Logo and identity files — not photography.
 | `favicon.png` | Browser tab icon, square | 512 × 512 |
 | `og-card.jpg` | Link preview when the site is shared | 1200 × 630 |
 
-`og-card.jpg` is what shows up in a text message, on Facebook, or in a Slack
-link preview — a photo of Malinda with the wordmark over it works well.
+**Wired:** `og-card.jpg` — referenced by `app/layout.tsx` as the Open Graph
+and Twitter card image. The current file is a 1200 × 630 crop of
+`images/services/wellness-coaching.jpg`; replace it with a purpose-made card
+(a photo with the wordmark over it works well) whenever one exists.
+
+The logo and favicon files above are still missing. Next.js picks up a favicon
+automatically from `app/icon.png` — that is where a square icon should go, not
+this folder.

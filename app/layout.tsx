@@ -15,6 +15,21 @@ export const metadata: Metadata = {
     url: SITE.url,
     siteName: SITE.name,
     type: 'website',
+    // Resolved against metadataBase above.
+    images: [
+      {
+        url: '/brand/og-card.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Malinda D. Ellis playing crystal singing bowls during a sound bath',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+    images: ['/brand/og-card.jpg'],
   },
 }
 

@@ -170,6 +170,29 @@ img {
     radial-gradient(ellipse 55% 45% at 15% 95%, rgba(212, 162, 78, 0.1), transparent);
 }
 
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 28%;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.6rem;
+  }
+}
+
 .hero h1 {
   font-size: clamp(2.4rem, 6vw, 4.2rem);
   max-width: 17ch;
@@ -222,6 +245,15 @@ img {
   font-size: clamp(1.7rem, 3.4vw, 2.4rem);
 }
 
+.story-photo {
+  width: 100%;
+  height: auto;
+  margin-top: 1.9rem;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
 .story-copy p {
   color: var(--text-soft);
   margin-bottom: 1.2rem;
@@ -271,6 +303,15 @@ img {
   color: #fff;
 }
 
+.service-photo {
+  width: 100%;
+  height: auto;
+  margin-top: 1.2rem;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
 .service-copy p {
   font-size: 0.94rem;
   color: var(--text-soft);
@@ -286,6 +327,35 @@ img {
   font-style: italic;
   font-size: 1.05rem;
   color: var(--gold-soft);
+}
+
+/* gallery band */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 720px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gallery-figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--border);
+}
+
+.gallery-figure figcaption {
+  margin-top: 0.7rem;
+  font-size: 0.8rem;
+  color: var(--text-faint);
 }
 
 /* quote band */

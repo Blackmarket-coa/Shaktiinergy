@@ -1,4 +1,16 @@
-const SERVICES = [
+import Image, { type StaticImageData } from 'next/image'
+import wellnessPhoto from '@/public/images/services/wellness-coaching.jpg'
+import speakingPhoto from '@/public/images/services/public-speaking.jpg'
+
+interface Service {
+  glyph: string
+  title: string
+  /** Optional — a service renders text-only until a photo exists for it. */
+  photo?: { src: StaticImageData; alt: string }
+  paragraphs: string[]
+}
+
+const SERVICES: Service[] = [
   {
     glyph: '🔥',
     title: 'Life Coaching',
@@ -11,6 +23,10 @@ const SERVICES = [
   {
     glyph: '🌿',
     title: 'Wellness Coaching',
+    photo: {
+      src: wellnessPhoto,
+      alt: 'Malinda playing a set of chakra-tuned crystal singing bowls',
+    },
     paragraphs: [
       'In my holistic wellness coaching practice, I guide individuals on a transformative journey toward achieving balance and harmony in their lives. My approach goes beyond conventional methods, as I embrace a comprehensive understanding of health that encompasses not only the physical but also the mental and spiritual facets of our being.',
       "I provide a unique blend of education focused on nutritional health and stress management techniques. Nutrition is not just about what we eat; it's about nourishing the body at its core. Stress management extends beyond momentary relief; it's about creating lasting serenity within.",
@@ -21,6 +37,10 @@ const SERVICES = [
   {
     glyph: '🎤',
     title: 'Public Speaking',
+    photo: {
+      src: speakingPhoto,
+      alt: 'Malinda speaking into a microphone during a live sound healing session',
+    },
     paragraphs: [
       'As a passionate public speaker, my mission is clear: to illuminate the path towards self-empowerment and wellness within the Black and brown communities. I specialize in delivering motivational messages that resonate deeply with diverse audiences, including youth groups, domestic violence organizations, schools, drug and alcohol recovery centers, and wellness and spiritual communities.',
       'Through my engagements, I am dedicated to sparking transformative conversations about nutritional health and stress management. These are the tools I wield in my mission to rewrite the narrative of health and well-being in our communities. By introducing and reinforcing these vital tools, I aim to empower individuals to take charge of their well-being, instilling a sense of self-empowerment and fostering a culture of wellness.',
@@ -46,6 +66,15 @@ export function Services() {
                   {s.glyph}
                 </div>
                 <h3>{s.title}</h3>
+                {s.photo && (
+                  <Image
+                    className="service-photo"
+                    src={s.photo.src}
+                    alt={s.photo.alt}
+                    sizes="(max-width: 720px) 92vw, 240px"
+                    placeholder="blur"
+                  />
+                )}
               </div>
               <div className="service-copy">
                 {s.paragraphs.map((p, i) => (
